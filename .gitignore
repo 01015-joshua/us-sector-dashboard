@@ -1,0 +1,9 @@
+*
+
+!.gitignore
+!public/
+!public/index.html
+!.github/
+!.github/workflows/
+!.github/workflows/pages.yml
+!publish_dashboard.bat
