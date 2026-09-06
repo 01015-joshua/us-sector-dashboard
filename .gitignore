@@ -7,3 +7,4 @@
 !.github/workflows/
 !.github/workflows/pages.yml
 !publish_dashboard.bat
+!update_dashboard_data.bat
