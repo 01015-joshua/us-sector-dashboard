@@ -4,8 +4,14 @@ cd /d "%~dp0"
 
 set "APP_HOME=%~dp0"
 set "ENGINE_DIR=%APP_HOME%engine"
-set "PYTHON_EXE=C:\Users\ys650\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
-if not exist "%PYTHON_EXE%" set "PYTHON_EXE=python"
+set "DASHBOARD_ROOT=%APP_HOME%"
+set "DASHBOARD_OUTPUT_DIR=%APP_HOME%outputs"
+set "PYTHONUTF8=1"
+set "PYTHON_EXE=%APP_HOME%.venv\Scripts\python.exe"
+if not exist "%PYTHON_EXE%" (
+  echo Missing project Python environment. Install blpapi in .venv first.
+  exit /b 1
+)
 
 echo Updating dashboard data...
 echo.
@@ -31,12 +37,14 @@ if errorlevel 1 goto fail
 echo.
 echo Dashboard data updated. public\index.html is ready for review.
 echo If everything looks OK, run publish_dashboard.bat.
+set "RESULT=0"
 goto done
 
 :fail
+set "RESULT=1"
 echo.
 echo Update failed. Check the message above, or open logs if this was run from the dashboard button.
 
 :done
-pause
-endlocal
+if not "%DASHBOARD_NO_PAUSE%"=="1" pause
+endlocal & exit /b %RESULT%
